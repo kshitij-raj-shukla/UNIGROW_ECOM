@@ -11,7 +11,7 @@ export const registerFormControls = [
     label: "Email",
     placeholder: "Enter your email",
     componentType: "input",
-    type: "email",
+    type: "email", 
   },
   {
     name: "password",
@@ -76,6 +76,7 @@ export const addProductFormElements = [
       { id: "levi", label: "Levi's" },
       { id: "zara", label: "Zara" },
       { id: "h&m", label: "H&M" },
+      { id: "others", label: "Other Brands" },
     ],
   },
   {
@@ -159,6 +160,7 @@ export const brandOptionsMap = {
   levi: "Levi",
   zara: "Zara",
   "h&m": "H&M",
+  others: "Other Brands"
 };
 
 export const filterOptions = {
@@ -176,6 +178,7 @@ export const filterOptions = {
     { id: "levi", label: "Levi's" },
     { id: "zara", label: "Zara" },
     { id: "h&m", label: "H&M" },
+    { id: "others", label: "Other Brands" },
   ],
 };
 

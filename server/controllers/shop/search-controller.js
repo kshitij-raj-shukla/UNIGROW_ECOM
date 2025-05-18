@@ -4,34 +4,32 @@ const Product = require('../../models/Product');
 const searchProducts = async (req, res) => {
   try {
     const { keyword } = req.params;
-    if (!keyword || typeof keyword !== "string") {
+    if (!keyword || typeof keyword !== 'string') {
       return res.status(400).json({
         success: false,
-        message: "Keyword is required and must be in string format",
+        message: 'Keyword is required and must be a string',
       });
     }
 
-    // Sequelize case-insensitive LIKE search on multiple columns
+    // MySQL default collations are case-insensitive, so LIKE works like ILIKE
+    const likePattern = `%${keyword}%`;
     const searchResults = await Product.findAll({
       where: {
         [Op.or]: [
-          { title: { [Op.iLike]: `%${keyword}%` } },
-          { description: { [Op.iLike]: `%${keyword}%` } },
-          { category: { [Op.iLike]: `%${keyword}%` } },
-          { brand: { [Op.iLike]: `%${keyword}%` } },
+          { title:       { [Op.like]: likePattern } },
+          { description: { [Op.like]: likePattern } },
+          { category:    { [Op.like]: likePattern } },
+          { brand:       { [Op.like]: likePattern } },
         ],
       },
     });
 
-    res.status(200).json({
-      success: true,
-      data: searchResults,
-    });
+    res.status(200).json({ success: true, data: searchResults });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({
       success: false,
-      message: "Error",
+      message: 'Server error',
     });
   }
 };
